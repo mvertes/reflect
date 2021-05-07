@@ -5,8 +5,9 @@
 package reflect
 
 import (
-	"internal/unsafeheader"
 	"unsafe"
+
+	"github.com/mvertes/reflect/internal/unsafeheader"
 )
 
 // Swapper returns a function that swaps the elements in the provided

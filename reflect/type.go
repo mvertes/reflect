@@ -16,12 +16,13 @@
 package reflect
 
 import (
-	"internal/unsafeheader"
 	"strconv"
 	"sync"
 	"unicode"
 	"unicode/utf8"
 	"unsafe"
+
+	"github.com/mvertes/reflect/internal/unsafeheader"
 )
 
 // Type is the representation of a Go type.
@@ -678,9 +679,11 @@ func resolveReflectText(ptr unsafe.Pointer) textOff {
 	return textOff(addReflectOff(ptr))
 }
 
-type nameOff int32 // offset to a name
-type typeOff int32 // offset to an *rtype
-type textOff int32 // offset from top of text section
+type (
+	nameOff int32 // offset to a name
+	typeOff int32 // offset to an *rtype
+	textOff int32 // offset from top of text section
+)
 
 func (t *rtype) nameOff(off nameOff) name {
 	return name{(*byte)(resolveNameOff(unsafe.Pointer(t), int32(off)))}
@@ -1912,22 +1915,27 @@ type funcTypeFixed4 struct {
 	funcType
 	args [4]*rtype
 }
+
 type funcTypeFixed8 struct {
 	funcType
 	args [8]*rtype
 }
+
 type funcTypeFixed16 struct {
 	funcType
 	args [16]*rtype
 }
+
 type funcTypeFixed32 struct {
 	funcType
 	args [32]*rtype
 }
+
 type funcTypeFixed64 struct {
 	funcType
 	args [64]*rtype
 }
+
 type funcTypeFixed128 struct {
 	funcType
 	args [128]*rtype
@@ -2440,7 +2448,7 @@ func StructOf(fields []StructField) Type {
 					if ft.kind&kindDirectIface != 0 {
 						tfn = MakeFunc(mtyp, func(in []Value) []Value {
 							var args []Value
-							var recv = in[0]
+							recv := in[0]
 							if len(in) > 1 {
 								args = in[1:]
 							}
@@ -2448,7 +2456,7 @@ func StructOf(fields []StructField) Type {
 						})
 						ifn = MakeFunc(mtyp, func(in []Value) []Value {
 							var args []Value
-							var recv = in[0]
+							recv := in[0]
 							if len(in) > 1 {
 								args = in[1:]
 							}
@@ -2457,7 +2465,7 @@ func StructOf(fields []StructField) Type {
 					} else {
 						tfn = MakeFunc(mtyp, func(in []Value) []Value {
 							var args []Value
-							var recv = in[0]
+							recv := in[0]
 							if len(in) > 1 {
 								args = in[1:]
 							}
@@ -2465,7 +2473,7 @@ func StructOf(fields []StructField) Type {
 						})
 						ifn = MakeFunc(mtyp, func(in []Value) []Value {
 							var args []Value
-							var recv = Indirect(in[0])
+							recv := Indirect(in[0])
 							if len(in) > 1 {
 								args = in[1:]
 							}

@@ -5,10 +5,11 @@
 package reflect
 
 import (
-	"internal/unsafeheader"
 	"math"
 	"runtime"
 	"unsafe"
+
+	"github.com/mvertes/reflect/internal/unsafeheader"
 )
 
 const ptrSize = 4 << (^uintptr(0) >> 63) // unsafe.Sizeof(uintptr(0)) but an ideal const
